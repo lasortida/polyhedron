@@ -87,6 +87,12 @@ class Edge:
         x = - f0 / (f1 - f0)
         return Segment(Edge.SBEG, x) if f0 < 0.0 else Segment(x, Edge.SFIN)
 
+    def __eq__(self, other):
+        return self.fin == other.fin and self.beg == other.beg
+
+    def __hash__(self):
+        return hash((self.beg, self.fin))
+
 
 class Facet:
     """ Грань полиэдра """
@@ -135,6 +141,8 @@ class Polyedr:
 
         # списки вершин, рёбер и граней полиэдра
         self.vertexes, self.edges, self.facets = [], [], []
+        # множество рёбер полиэдра
+        self.edge_set = set()
         # ответ на поставленную задачу
         self.answer = 0
 
@@ -167,7 +175,12 @@ class Polyedr:
                     origin = list(self.vertexes[int(n) - 1] for n in buf)
                     # задание рёбер грани и подсчёт ответа на поставленную задачу
                     for n in range(size):
-                        self.answer += Edge(origin[n - 1], origin[n]).summ
+                        e = Edge(origin[n - 1], origin[n])
+                        e_ = Edge(origin[n], origin[n - 1])
+                        if e not in self.edge_set and e_ not in self.edge_set:
+                            self.answer += e.summ
+                        self.edge_set.add(e)
+                        self.edge_set.add(e_)
                         self.edges.append(Edge(vertexes[n - 1], vertexes[n]))
                     # задание самой грани
                     self.facets.append(Facet(vertexes))

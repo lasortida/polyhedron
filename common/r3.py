@@ -49,6 +49,13 @@ class R3:
     def sum_cords(self):
         return self.x + self.y + self.z
 
+    def __eq__(self, other):
+        return (self.x == other.x and self.y == other.y and
+                self.z == other.z)
+
+    def __hash__(self):
+        return hash((self.x, self.y, self.z))
+
 
 if __name__ == "__main__":  # pragma: no cover
     x = R3(1.0, 1.0, 1.0)
