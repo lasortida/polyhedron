@@ -5,8 +5,11 @@ class R3:
     """ Вектор (точка) в R3 """
 
     # Конструктор
+    # В конструкторе будет высчитываться расстояние от точки до плоскости x=2
     def __init__(self, x, y, z):
         self.x, self.y, self.z = x, y, z
+        d = abs(2 - x)  # расстояние
+        self.good = d < 1  # хорошая ли точка
 
     # Сумма векторов
     def __add__(self, other):
@@ -41,6 +44,10 @@ class R3:
             self.y * other.z - self.z * other.y,
             self.z * other.x - self.x * other.z,
             self.x * other.y - self.y * other.x)
+
+    # Сумма координат
+    def sum_cords(self):
+        return self.x + self.y + self.z
 
 
 if __name__ == "__main__":  # pragma: no cover

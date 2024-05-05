@@ -7,6 +7,7 @@ from common.tk_drawer import TkDrawer
 
 class Segment:
     """ Одномерный отрезок """
+
     # Параметры конструктора: начало и конец отрезка (числа)
 
     def __init__(self, beg, fin):
@@ -42,6 +43,12 @@ class Edge:
         self.beg, self.fin = beg, fin
         # Список «просветов»
         self.gaps = [Segment(Edge.SBEG, Edge.SFIN)]
+        # Сумма проекций ребра
+        self.summ = 0
+        # Определяем хорошее ли ребро
+        if beg.good and fin.good:
+            r = fin - beg
+            self.summ = abs(r.sum_cords())
 
     # Учёт тени от одной грани
     def shadow(self, facet):
@@ -60,7 +67,7 @@ class Edge:
                 facet.vertexes[0], facet.h_normal()))
         if shade.is_degenerate():
             return
-        # Преобразование списка «просветов», если тень невырождена
+        # Преобразование списка «просветов», если тень не вырождена
         gaps = [s.subtraction(shade) for s in self.gaps]
         self.gaps = [
             s for s in reduce(add, gaps, []) if not s.is_degenerate()]
@@ -83,6 +90,7 @@ class Edge:
 
 class Facet:
     """ Грань полиэдра """
+
     # Параметры конструктора: список вершин
 
     def __init__(self, vertexes):
@@ -95,7 +103,7 @@ class Facet:
     # Нормаль к «горизонтальному» полупространству
     def h_normal(self):
         n = (
-            self.vertexes[1] - self.vertexes[0]).cross(
+                self.vertexes[1] - self.vertexes[0]).cross(
             self.vertexes[2] - self.vertexes[0])
         return n * (-1.0) if n.dot(Polyedr.V) < 0.0 else n
 
@@ -109,7 +117,7 @@ class Facet:
     def _vert(self, k):
         n = (self.vertexes[k] - self.vertexes[k - 1]).cross(Polyedr.V)
         return n * \
-            (-1.0) if n.dot(self.vertexes[k - 1] - self.center()) < 0.0 else n
+               (-1.0) if n.dot(self.vertexes[k - 1] - self.center()) < 0.0 else n
 
     # Центр грани
     def center(self):
@@ -127,6 +135,8 @@ class Polyedr:
 
         # списки вершин, рёбер и граней полиэдра
         self.vertexes, self.edges, self.facets = [], [], []
+        # ответ на поставленную задачу
+        self.answer = 0
 
         # список строк файла
         with open(file) as f:
@@ -142,19 +152,22 @@ class Polyedr:
                     # во второй строке число вершин, граней и рёбер полиэдра
                     nv, nf, ne = (int(x) for x in line.split())
                 elif i < nv + 2:
-                    # задание всех вершин полиэдра
+                    # задание всех вершин полиэдра (без поворота и гомотетии)
                     x, y, z = (float(x) for x in line.split())
-                    self.vertexes.append(R3(x, y, z).rz(
-                        alpha).ry(beta).rz(gamma) * c)
+                    self.vertexes.append(R3(x, y, z))
                 else:
                     # вспомогательный массив
                     buf = line.split()
                     # количество вершин очередной грани
                     size = int(buf.pop(0))
                     # массив вершин этой грани
-                    vertexes = list(self.vertexes[int(n) - 1] for n in buf)
-                    # задание рёбер грани
+                    vertexes = list(self.vertexes[int(n) - 1].rz(alpha
+                                                                 ).ry(beta).rz(gamma) * c for n in buf)
+                    # массив с неизменёнными вершинами (без поворота и гомотетии)
+                    origin = list(self.vertexes[int(n) - 1] for n in buf)
+                    # задание рёбер грани и подсчёт ответа на поставленную задачу
                     for n in range(size):
+                        self.answer += Edge(origin[n - 1], origin[n]).summ
                         self.edges.append(Edge(vertexes[n - 1], vertexes[n]))
                     # задание самой грани
                     self.facets.append(Facet(vertexes))
