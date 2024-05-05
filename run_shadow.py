@@ -14,7 +14,8 @@ try:
         p = Polyedr(f"data/{name}.geom")
         p.draw(tk)
         delta_time = time() - start_time
-        print(f"Сумма длин проекций рёбер, оба из концов которых - 'хорошие' точки: {p.answer}")
+        print(f"Сумма длин проекций рёбер, оба из концов которых - "
+              f"'хорошие' точки: {p.answer}")
         print(f"Изображение полиэдра '{name}' заняло {delta_time} сек.")
         input("Hit 'Return' to continue -> ")
 except (EOFError, KeyboardInterrupt):

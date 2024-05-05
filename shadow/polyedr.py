@@ -169,11 +169,11 @@ class Polyedr:
                     # количество вершин очередной грани
                     size = int(buf.pop(0))
                     # массив вершин этой грани
-                    vertexes = list(self.vertexes[int(n) - 1].rz(alpha
-                                                                 ).ry(beta).rz(gamma) * c for n in buf)
-                    # массив с неизменёнными вершинами (без поворота и гомотетии)
+                    vertexes = list(self.vertexes[int(n) - 1].rz(alpha).
+                                    ry(beta).rz(gamma) * c for n in buf)
+                    # массив с вершинами (без поворота и гомотетии)
                     origin = list(self.vertexes[int(n) - 1] for n in buf)
-                    # задание рёбер грани и подсчёт ответа на поставленную задачу
+                    # задание рёбер и подсчёт ответа на поставленную задачу
                     for n in range(size):
                         e = Edge(origin[n - 1], origin[n])
                         e_ = Edge(origin[n], origin[n - 1])
