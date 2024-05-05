@@ -123,7 +123,7 @@ class Facet:
     def _vert(self, k):
         n = (self.vertexes[k] - self.vertexes[k - 1]).cross(Polyedr.V)
         return n * \
-               (-1.0) if n.dot(self.vertexes[k - 1] - self.center()) < 0.0 else n
+            (-1.0) if n.dot(self.vertexes[k - 1] - self.center()) < 0.0 else n
 
     # Центр грани
     def center(self):
