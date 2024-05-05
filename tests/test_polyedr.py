@@ -8,8 +8,8 @@ class TestPolyedr(unittest.TestCase):
 
     @classmethod
     def setUpClass(self):
-        self.pyramid = Polyedr("../data/pyramid.geom")
-        self.cube = Polyedr("../data/cube_test.geom")
+        self.pyramid = Polyedr("./data/pyramid.geom")
+        self.cube = Polyedr("./data/cube_test.geom")
 
         fake_file_content = """200.0	45.0	45.0	30.0
 8	4	16
