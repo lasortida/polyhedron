@@ -112,3 +112,11 @@ class TestVoid(unittest.TestCase):
         s.shadow(f)
         self.assertEqual(len(s.gaps), 1)
         self.assertEqual(SegmentApproxMatcher(s.gaps[0]), Segment(0.0, 1.0))
+
+    def test_summ_01(self):
+        s = Edge(R3(1.5, 0., -1.), R3(1.5, -1., 0.5))
+        self.assertEqual(s.summ, 2.5)
+
+    def test_summ_02(self):
+        s = Edge(R3(0., -1., 2.), R3(1.9, 0., 0.))
+        self.assertEqual(s.summ, 0)

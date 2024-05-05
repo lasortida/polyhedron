@@ -8,6 +8,9 @@ class TestPolyedr(unittest.TestCase):
 
     @classmethod
     def setUpClass(self):
+        self.pyramid = Polyedr("../data/pyramid.geom")
+        self.cube = Polyedr("../data/cube_test.geom")
+
         fake_file_content = """200.0	45.0	45.0	30.0
 8	4	16
 -0.5	-0.5	0.5
@@ -36,3 +39,12 @@ class TestPolyedr(unittest.TestCase):
 
     def test_num_edges(self):
         self.assertEqual(len(self.polyedr.edges), 16)
+
+    def test_modification_01(self):
+        self.assertEqual(self.polyedr.answer, 0.)
+
+    def test_modification_02(self):
+        self.assertEqual(self.pyramid.answer, 4.)
+
+    def test_modification_03(self):
+        self.assertEqual(self.cube.answer, 12.)

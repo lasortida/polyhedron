@@ -48,7 +48,7 @@ class Edge:
         # Определяем хорошее ли ребро
         if beg.good and fin.good:
             r = fin - beg
-            self.summ = abs(r.sum_cords())
+            self.summ = r.sum_cords()
 
     # Учёт тени от одной грани
     def shadow(self, facet):

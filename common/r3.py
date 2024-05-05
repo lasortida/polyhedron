@@ -47,7 +47,7 @@ class R3:
 
     # Сумма координат
     def sum_cords(self):
-        return self.x + self.y + self.z
+        return abs(self.x) + abs(self.y) + abs(self.z)
 
     def __eq__(self, other):
         return (self.x == other.x and self.y == other.y and
