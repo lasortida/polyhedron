@@ -44,7 +44,7 @@ class Edge:
         # Список «просветов»
         self.gaps = [Segment(Edge.SBEG, Edge.SFIN)]
         # Сумма проекций ребра
-        self.summ = 0
+        self.summ = 0.
         # Определяем хорошее ли ребро
         if beg.good and fin.good:
             r = fin - beg
@@ -144,7 +144,7 @@ class Polyedr:
         # множество рёбер полиэдра
         self.edge_set = set()
         # ответ на поставленную задачу
-        self.answer = 0
+        self.answer = 0.
 
         # список строк файла
         with open(file) as f:
