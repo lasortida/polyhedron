@@ -55,3 +55,23 @@ $$ |x - 2| < 1. $$
 
 ~~~{.py include="tests/pyramid_test.py"}
 ~~~
+
+## Команды для получения отчета в различных форматах
+
+Команда для получения отчета в формате `pdf`, с использованием шаблона `default.latex`.
+
+~~~sh
+pandoc --template default.latex -s --toc --lua-filter ./include-code-files.lua report.md -o report.pdf
+~~~
+
+Команда для получения отчета в формате `html`, с использованием шаблона `default.html5`.
+
+~~~sh
+pandoc -o report.html -f markdown -t html -s --toc --lua-filter ./include-code-files.lua --mathjax --template default.html5 report.md
+~~~
+
+Команда для получения отчета в формате `docx`.
+
+~~~sh
+pandoc -s report.md --toc --lua-filter ./include-code-files.lua -o report.docx
+~~~
