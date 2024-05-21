@@ -5,7 +5,7 @@ author:
 - Е.А. Роганов
 - А.И. Александров
 date: 01.05.2024
-title: Отчёт о модификации проекта «Изоюражение проекции полиэдра»
+title: Отчёт о модификации проекта «Изображение проекции полиэдра»
 ...
 
 ## Постановка задачи
@@ -46,7 +46,7 @@ $$ |x - 2| < 1. $$
 8. В файле `run_shadow.py` добавлена функция `print` для вывода требуемого в 
    задании ответа, а также добавлены две новые фигуры --- куб и пирамида. 
 
-### Пример тестов, иллюстрирующих правильность работы модификации
+## Пример тестов, иллюстрирующих правильность работы модификации
 
 Куб, у которого четыре «хорошие» вершины и четыре «хороших» ребра.
 
@@ -67,17 +67,21 @@ $$ |x - 2| < 1. $$
 Команда для получения отчета в формате `pdf`, с использованием шаблона `default.latex`.
 
 ```sh
-pandoc --template default.latex -s --toc --lua-filter ./include-code-files.lua report.md -o report.pdf
+pandoc --template default.latex -s --toc --lua-filter\
+ ./include-code-files.lua report.md -o report.pdf
 ```
 
 Команда для получения отчета в формате `html`, с использованием шаблона `default.html5`.
 
 ```sh
-pandoc -o report.html -f markdown -t html -s --toc --lua-filter ./include-code-files.lua --mathjax --template default.html5 report.md
+pandoc -o report.html -f markdown -t html -s --toc\
+ --lua-filter ./include-code-files.lua --mathjax\
+  --template default.html5 report.md
 ```
 
 Команда для получения отчета в формате `docx`.
 
 ```sh
-pandoc -s report.md --toc --lua-filter ./include-code-files.lua -o report.docx
+pandoc -s report.md --toc --lua-filter\
+ ./include-code-files.lua -o report.docx
 ```
